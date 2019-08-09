@@ -14,7 +14,7 @@ axios.get("https://lambda-times-backend.herokuapp.com/topics")
             createTab(item);
         });
     })
-    .catch(error => console.log(`Error: ${error}`))
+    .catch(error => console.log(`Error: ${error}`));
 
 
 const topics = document.querySelector('.topics');
