@@ -18,7 +18,7 @@
   </div>
 */
 
-const carouselContainer = document.querySelector(".carousel-container")
+const carouselContainer = document.querySelector(".carousel-container");
 
 function createCarousel() {
   //Creating Elements
@@ -51,4 +51,33 @@ function createCarousel() {
   carousel.appendChild(treesImg);
   carousel.appendChild(turntableImg);
   carousel.appendChild(rightBtn);
+
+  //Img array
+  let pastCounter = -1;
+  let counter = 0;
+  const imageArray = [mountainImg, computerImg, treesImg, turntableImg];
+  function displayImg() {
+    imageArray[counter].style.display = "block";
+    imageArray[counter].style.zIndex = -1;
+
+    if (pastCounter >= 0) {
+      imageArray[pastCounter].style.display = "none";
+    }
+    counter++;
+    pastCounter++;
+
+    if (counter === 4) {
+      counter = 0;
+    }
+    if (pastCounter === 4) {
+      pastCounter = 0;
+    }
+  }
+  displayImg();
+
+  leftBtn.addEventListener('click', displayImg);
+  rightBtn.addEventListener('click', displayImg);
+
 }
+
+createCarousel();
