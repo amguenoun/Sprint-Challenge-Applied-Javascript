@@ -22,7 +22,7 @@
 //     .then(response => console.log(response))
 //     .catch(error => console.log(`Error: ${error}`));
 
-const cardContainer = documents.querySelector(".cards-container");
+const cardContainer = document.querySelector(".cards-container");
 
 function createCard(cardObject) {
     //Creating Elements
@@ -45,4 +45,11 @@ function createCard(cardObject) {
     const authorName = document.createElement('span');
     authorName.textContent = `By ${cardObject.authorName}`;
 
+    //Appending Elements
+    cardContainer.appendChild(card);
+    card.appendChild(headline);
+    card.appendChild(author);
+    author.appendChild(imgContainer);
+    imgContainer.appendChild(img);
+    card.appendChild(authorName);
 }
