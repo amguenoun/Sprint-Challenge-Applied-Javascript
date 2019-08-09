@@ -30,15 +30,20 @@ function createCarousel() {
 
   const mountainImg = document.createElement('img');
   mountainImg.src = "./assets/carousel/mountains.jpeg";
+  mountainImg.style.display = "block";
+  mountainImg.style.zIndex = -1;
 
   const computerImg = document.createElement('img');
   computerImg.src = "./assets/carousel/computer.jpeg";
+  computerImg.style.zIndex = -1;
 
   const treesImg = document.createElement('img');
   treesImg.src = "./assets/carousel/trees.jpeg";
+  treesImg.style.zIndex = -1;
 
   const turntableImg = document.createElement('img');
   turntableImg.src = "./assets/carousel/turntable.jpeg";
+  turntableImg.style.zIndex = -1;
 
   const rightBtn = document.createElement('div');
   rightBtn.classList.add('right-button');
@@ -53,27 +58,22 @@ function createCarousel() {
   carousel.appendChild(rightBtn);
 
   //Img array
-  let pastCounter = -1;
-  let counter = 0;
+  let rounds = 0;
+  let pastRounds = 0;
+  let counter = 1;
   const imageArray = [mountainImg, computerImg, treesImg, turntableImg];
   function displayImg() {
-    imageArray[counter].style.display = "block";
-    imageArray[counter].style.zIndex = -1;
-
-    if (pastCounter >= 0) {
-      imageArray[pastCounter].style.display = "none";
-    }
+    console.log(counter - (rounds * 4), (counter - 1) - (pastRounds * 4));
+    imageArray[counter - (rounds * 4)].style.display = "block";
+    imageArray[(counter - 1) - (pastRounds * 4)].style.display = "none";
     counter++;
-    pastCounter++;
-
-    if (counter === 4) {
-      counter = 0;
+    if (counter % 4 === 0) {
+      rounds++;
     }
-    if (pastCounter === 4) {
-      pastCounter = 0;
+    if (rounds > 0 && (counter - 1) - (pastRounds * 4) === 4) {
+      pastRounds++;
     }
   }
-  displayImg();
 
   leftBtn.addEventListener('click', displayImg);
   rightBtn.addEventListener('click', displayImg);
