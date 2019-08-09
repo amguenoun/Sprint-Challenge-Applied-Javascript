@@ -42,4 +42,13 @@ function createCarousel() {
 
   const rightBtn = document.createElement('div');
   rightBtn.classList.add('right-button');
+
+  //Appending Elements
+  carouselContainer.appendChild(carousel);
+  carousel.appendChild(leftBtn);
+  carousel.appendChild(mountainImg);
+  carousel.appendChild(computerImg);
+  carousel.appendChild(treesImg);
+  carousel.appendChild(turntableImg);
+  carousel.appendChild(rightBtn);
 }
