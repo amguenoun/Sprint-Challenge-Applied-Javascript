@@ -10,6 +10,7 @@
 
 axios.get("https://lambda-times-backend.herokuapp.com/topics")
     .then(response => {
+        createTab("ALL");
         response.data.topics.forEach((item) => {
             createTab(item);
         });

@@ -17,24 +17,35 @@
 // </div>
 //
 // Create a card for each of the articles and add the card to the DOM.
+const cardArr = [];
+const cardContainer = document.querySelector(".cards-container");
 
 axios.get("https://lambda-times-backend.herokuapp.com/articles")
     .then(response => {
         const articleKeys = Object.keys(response.data.articles);
         articleKeys.forEach((item) => {
             response.data.articles[item].forEach((elem) => {
-                createCard(elem);
+                if (item === "node") {
+                    cardArr.push(createCard(elem, "node.js"));
+                }
+                else {
+                    cardArr.push(createCard(elem, item));
+                }
+
             });
         });
+        return cardArr;
+    })
+    .then(response => {
+        response.forEach(item => cardContainer.appendChild(item));
     })
     .catch(error => console.log(`Error: ${error}`));
 
-const cardContainer = document.querySelector(".cards-container");
-
-function createCard(cardObject) {
+function createCard(cardObject, dataType) {
     //Creating Elements
     const card = document.createElement('div');
     card.classList.add('card');
+    card.setAttribute("data-subject", dataType)
 
     const headline = document.createElement('div');
     headline.classList.add('headline');
@@ -53,10 +64,42 @@ function createCard(cardObject) {
     authorName.textContent = `By ${cardObject.authorName}`;
 
     //Appending Elements
-    cardContainer.appendChild(card);
     card.appendChild(headline);
     card.appendChild(author);
     author.appendChild(imgContainer);
     imgContainer.appendChild(img);
     author.appendChild(authorName);
+
+    return card;
 }
+
+
+function displayCards(type) {
+    cardArr.forEach(item => {
+        item.remove();
+    });
+    if (type === undefined || type === "ALL") {
+        cardArr.forEach(item => {
+            cardContainer.appendChild(item);
+        });
+    }
+    else {
+        cardArr.forEach(item => {
+            if (item.dataset.subject == type) {
+                cardContainer.appendChild(item);
+            }
+        });
+    }
+}
+
+window.setTimeout(() => {
+    const tabNames = document.querySelectorAll(".tab");
+    console.log(tabNames);
+    tabNames.forEach((item) => {
+        item.addEventListener('click', () => {
+            item.classList.toggle('active-tab');
+            displayCards(item.textContent);
+
+        });
+    });
+}, 4000)
